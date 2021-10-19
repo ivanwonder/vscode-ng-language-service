@@ -11,7 +11,10 @@
     "multi-root ready"
   ],
   "engines": {
-    "vscode": "^1.56.0"
+    "vscode": "^1.56.0",
+    "node": ">=14.0.0",
+    "yarn": ">=1.22.4 <2",
+    "npm": "Please use yarn instead of NPM to install dependencies"
   },
   "capabilities": {
     "untrustedWorkspaces": {
