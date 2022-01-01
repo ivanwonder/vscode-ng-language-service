@@ -1,0 +1,5 @@
+{
+  "name": "disable-the-ts-rename-provide",
+  "main": "./index.js",
+  "version": "0.0.1"
+}
