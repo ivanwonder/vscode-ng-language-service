@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-function init(modules) {
+ function init(modules) {
     const ts = modules.typescript;
     function create(info) {
         // Diagnostic logging
@@ -19,11 +19,19 @@ function init(modules) {
             proxy[k] = (...args) => x.apply(info.languageService, args);
         }
         // Remove specified entries from completion list
-        proxy.getRenameInfo = () => {
-            return {
-                canRename: false,
-                localizedErrorMessage: "disable the rename provide and should be provide by angular extension",
-            };
+        function isAngularCore(path) {
+            return path.endsWith('@angular/core/core.d.ts');
+        }
+        proxy.getRenameInfo = (fileName, position) => {
+            const angularCore = info.project.getFileNames().find(isAngularCore);
+            if(angularCore) {
+                return {
+                    canRename: false,
+                    localizedErrorMessage: "disable the rename provide and should be provide by angular extension",
+                };
+            } else {
+                return info.languageService.getRenameInfo(fileName, position)
+            }
         };
         return proxy;
     }
